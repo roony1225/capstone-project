@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+    background-color: black;
+    margin: 0px;
+    padding: 0px;
+}
+
+video {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 15px);
+    /* width: 100vw; */
+    /* height: 100vh; */
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg);
+}
+
+#qrcode {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}

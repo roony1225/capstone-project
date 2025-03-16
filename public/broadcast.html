@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Broadcaster</title>
+    <meta charset="UTF-8" />
+    <link href="broadcaster.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  </head>
+  <body>
+    <video id="myVideo" playsinline autoplay muted></video>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="broadcast.js"></script>
+    <div id="qrcode"></div>
+  </body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Viewer</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="watch.css" rel="stylesheet"/>
+    <script defer src="watch.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  
+  <body>
+    <img class="btn-top-left" src="images/recheck.png" onclick="sendSignal()"></button>
+    <div id="check_result" class="Check_Result">
+      <div id="person_count" class="Person_Count">Number of People: </div>
+      <div id="relation_result" class="Relation_Result">Relation: </div>
+    </div>
+    <img class="btn-top-right" id="help_button" src="images/questionmark.png">
+
+    <div id="main-background">
+      <div id="main-background-keep-center">
+
+        <div id="photo-outer">
+          <div id="section-video">
+            <video id="videostream" playsinline autoplay muted></video>
+            <div id="text-overlay"></div>
+          </div>
+        </div>
+
+        <div id="removebtn-section"></div>
+        <div id="display-selected-pose"></div>
+
+      </div>
+    </div>
+
+    <div id="section-bottommenu">
+      <div class="sns" id="sns">
+        <img id="sns-image" src="images/gallery.png">
+      </div>
+      <div class="acc-result" id="acc-result"></div>
+      <img id="capture-image" class="capture-image" src="images/capture.png" alt="buttonpng" onclick="imgCapture()">
+      <img id="myBtn" class="btn-bottom-right" src="images/posebutton.png" onclick="getPoseData()"></button>
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content" id="modal-content">
+        <div class="modal-header">
+          <h3>Pose Recommedation</h3>
+          <span class="close">&times;</span>
+        </div>
+        <h1 id="modal_preText">인원수와 관계를 먼저 설정해주세요!</h1>
+        <div class="modal-border"></div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+
+    <div id="modal_reconfirm_relation" class="Modal_Reconfirm_Relation">
+      <div id="modal_reconfirm_realtion_content" class="Modal_Reconfirm_Relation_Content">
+        <p id="modal_reconfirm_relation_text">관계를 선택해주세요.</p><br>
+        <div class="container">
+          <div class="radio-option" id="radio-option1">
+            <input type="radio" id="relation1" name="relation" value="Self" onclick="checkRelation(0)">
+            <label for="relation1">
+              <img src="images/solo.png">
+              <div>혼자</div>
+            </label><br>
+          </div>
+
+          <div class="radio-option" id="radio-option2">
+            <input type="radio" id="relation2" name="relation" value="Friend" onclick="checkRelation(1)">
+            <label for="relation2">
+              <img src="images/friends.png">
+              <div>친구</div>
+            </label><br>
+          </div>
+
+          <div class="radio-option" id="radio-option3">
+            <input type="radio" id="relation3" name="relation" value="Lover" onclick="checkRelation(2)">
+            <label for="relation3">
+              <img src="images/lover.png">
+              <div>연인</div>
+            </label><br>
+          </div>
+
+          <div class="radio-option" id="radio-option4">
+            <input type="radio" id="relation4" name="relation" value="Married_Couple" onclick="checkRelation(3)">
+            <label for="relation4">
+              <img src="images/family.png">
+              <div>가족</div>
+            </label><br>
+          </div>
+
+          <div class="radio-option" id="radio-option5">
+            <input type="radio" id="relation5" name="relation" value="Family" onclick="checkRelation(4)">
+            <label for="relation5">
+              <img src="images/group.png">
+              <div>모임/단체</div>
+            </label><br>
+          </div>
+        </div>
+        <br>
+        <button type="button" id="relation_confirm" class="Relation_Confirm" onclick="sendRelation()">&lt&lt Ready &gt&gt</button>
+        <br>
+
+      </div>
+    </div>
+
+    <div id="modal_recheck_personcount" class="Modal_Recheck_Personcount">
+      <div id="modal_recheck_personcount_content" class="Modal_Recheck_Personcount_Content">
+        <div id="recheck_personcount" class="Recheck_Personcount">Number of People: </div>
+        <div id="modal_recheck_personcount_button_section" class="Modal_Recheck_Personcount_Button_Section">
+          <button id="recheck_result_yes" class="Recheck_Result_Yes" onclick="closeRecheckModal()">YES</button>
+          <button id="recheck_result_no" class="Recheck_Result_No" onclick="inputPersoncount()">NO</button>
+        </div>
+
+        <div id="input_personcount_section" class="Input_Personcount_Section">
+          <p id="input_personcount_text">올바른 인원을 입력해주세요</p>
+          <input type="number" id="input_personcount"><br>
+          <button id="submit_button" onclick="submitInputPersoncountData()">SUBMIT</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal_help" class="Modal_Help">
+      <div id="modal_help_content" class="Modal_Help_Content">
+        <span id="help_close">&times;</span><br>
+        <img id="help_image" src="images/help.png"><br>
+        <div id="help_text">
+          <span class="highlight">1. 인원 & 관계 설정: </span>포즈를 추천받기 위해 인원과 관계를 설정해요.<br>
+          <span class="highlight">2. 포즈 추천: </span>인원과 관계에 따라 포즈를 추천드려요.<br>
+          <span class="highlight">3. 촬영버튼: </span>누르면 3초 후 사진을 촬영합니다.<br>
+          <span class="highlight">4. 갤러리: </span>직전에 찍은 사진과 포즈 정확도를 볼 수 있어요.<br>
+          <span class="highlight">5. 포즈 추천 취소: </span>현재 추천받은 포즈를 취소할 수 있어요.<br>
+          <span class="highlight">6. 도움말: </span>이 도움말을 다시 볼 수 있는 버튼이에요.
+        </div>
+      </div>
+    </div>
+
+    <div id="modal_loading" class="Modal-Loading">
+      <div id="modal_loading_content" class="Modal-Loading-Content">
+        <div id="loading_group" class="Loading-Group">
+          <span class="loader"></span>
+          <br><br>
+          <p>Loading...</p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

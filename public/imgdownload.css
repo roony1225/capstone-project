@@ -1,0 +1,135 @@
+body {
+    background-color: black;
+}
+
+#outer {
+    display: grid;
+    grid-template-rows: cover;
+    grid-template-areas:
+        "section-background"
+    ;
+}
+
+#section-background {
+    background-image: linear-gradient(to bottom,
+        rgba(0,0,0,1), rgba(0,0,0,0), rgba(0,0,0,1)),
+        url('images/pexels-nubikini-386009.jpg');
+    width: 100%;
+    height: 700px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: blur(5px);
+}
+
+#home {
+    display: absolute;
+    background-color: transparent;
+    width: 18%;
+    height: auto;
+}
+
+#context {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+
+}
+
+#section-snapshot {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: 1fr 5px 1fr;
+    grid-template-rows: 30px 1fr 5px 1fr 5px 2fr 10px 70px 70px;
+    grid-template-areas: 
+        ". . ."
+        "bl-1 . bl-2"
+        ". . ."
+        "bl-3 . bl-4"
+        ". . ."
+        "img-preview img-preview img-preview"
+        ". . ."
+        "btn1 btn1 btn1"
+        "zip zip zip";
+
+    
+    padding: 10px;
+    padding-bottom: 20px;
+    border-radius: 30px 30px 30px 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: auto;
+    width: auto;
+    color: white;
+}
+.cb {
+    display: none;
+    position: absolute;
+    margin-left: 10px;
+    margin-top: 3px;
+    width: 8%;
+    height: auto;
+}
+#bl-1 {
+    grid-area: bl-1;
+}
+#bl-2 {
+    grid-area: bl-2;
+}
+#bl-3 {
+    grid-area: bl-3;
+}
+#bl-4 {
+    grid-area: bl-4;
+}
+.image-btn {
+    background-color: transparent;
+    border: none;
+}
+
+.accuracy-result {
+    text-align: center;
+    font-weight: bold;
+    font-size: 100%;
+}
+
+#img-preview {
+    grid-area: img-preview;
+    margin: auto;
+    width: 320px;
+    height: 240px;
+}
+
+#download-btn {
+    grid-area: btn1;
+    margin: auto;
+    display: block;
+  
+    background-color: transparent;
+    border: none;
+    height: 70px;
+    width: auto;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: white;
+}
+
+#download-zip {
+    grid-area: zip;
+    margin: auto;
+    display: block;
+  
+    background-color: transparent;
+    border: none;
+    height: 70px;
+    width: auto;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: white;
+}

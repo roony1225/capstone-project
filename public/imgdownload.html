@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="imgdownload.css" rel="stylesheet"/>
+    <script defer src="imgdownload.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="outer">
+        
+        <div id="section-background"></div>
+        <div id="context">
+            <div id="section-snapshot">
+                <img id="home" src="images/home.png" onclick="window.open('main.html','_self')">
+                <div id="bl-1">
+                    <image id="cb1" class="cb" src="images/check.png"/>
+                    <button class="image-btn" id="image-section1" onclick="photochoose(1)"></button>
+                    <div class="accuracy-result" id="accuracy-result1">1</div>
+                </div>
+                <div id="bl-2">
+                    <image id="cb2" class="cb" src="images/check.png"/>
+                    <button class="image-btn" id="image-section2" onclick="photochoose(2)"></button>
+                    <div class="accuracy-result" id="accuracy-result2">2</div>
+                </div>
+                <div id="bl-3">
+                    <image id="cb3" class="cb" src="images/check.png"/>
+                    <button class="image-btn" id="image-section3" onclick="photochoose(3)"></button>
+                    <div class="accuracy-result" id="accuracy-result3">3</div>
+                </div>
+                <div id="bl-4">
+                    <image id="cb4" class="cb" src="images/check.png"/>
+                    <button class="image-btn" id="image-section4" onclick="photochoose(4)"></button>
+                    <div class="accuracy-result" id="accuracy-result4">4</div>
+                </div>
+                <img id="img-preview" src="images/gallery.png">
+                <button id="download-btn">&lt&lt Download Image &gt&gt</button>
+                <button id="download-zip" onclick="downloadSelectedImages()">&lt&lt Download Zip &gt&gt</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

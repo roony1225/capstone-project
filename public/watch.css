@@ -1,0 +1,537 @@
+input[type="radio"] {
+  transform: scale(2); /* 1.5배 크기로 확대 */
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: black;
+}
+
+#main-background {
+  margin: auto;
+  width: fit-content;
+
+  display: grid;
+  place-items: center;
+  height: 80vh;
+}
+
+#photo-outer {
+  background-color: black;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+    "section-video"
+  ;
+}
+
+video {
+  width: 975px;
+  height: 760px;
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg);
+}
+
+#text-overlay {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 200px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
+
+#section-video {
+  grid-area: section-video;
+  margin: auto;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+  /*background-color: white;*/
+}
+
+#section-bottommenu {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+
+  background-color: black;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 40px;
+  grid-template-areas: "sns capture-image btn-bottom-right"
+  "acc-result . .";
+}
+.btn-top-left {
+  z-index: 1;
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  margin: auto;
+  width: 120px;
+  height: 120px;
+}
+.Check_Result {
+  z-index: 1;
+  position: absolute;
+  left: 160px;
+  top: 50px;
+  color: white;
+  background-color: rgba(0,0,0,0.5);
+  font-size: 170%;
+}
+.btn-top-right {
+  z-index: 1;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  margin: auto;
+  width: 100px;
+  height: 100px;
+}
+.btn-middle-right {
+  z-index: 1;
+  position: absolute;
+  right: 0px;
+  margin: auto;
+  width: 100px;
+  height: 100px;
+}
+.capture-image {
+  margin: auto;
+  grid-area: capture-image;
+  width: 200px;
+  height: 200px;
+}
+.btn-bottom-right {
+  margin: auto;
+  grid-area: btn-bottom-right;
+  width: 200px;
+  height: 200px;
+}
+
+
+#selected-pose {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.sns {
+  margin: auto;
+  grid-area: sns;
+  background-color: red;
+  width: 320px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+}
+#sns-image {
+  width: 100%;
+  height: 100%;
+}
+
+
+.acc-result {
+  display: flex;
+  align-items: center;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 200%;
+  font-weight: bold;
+}
+
+
+
+/* 포즈 팝업창 */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+
+/* Modal Content/Box */
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 100%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+  color: rgb(82, 82, 82);
+  float: right;
+  font-size: 72px;
+  /*font-weight: bold;*/
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  background-color: white;
+  color: rgb(57, 128, 75);
+}
+
+.modal-border {
+  padding: 1px;
+  background-color: rgb(209, 209, 209);
+}
+
+.modal-body {
+  padding: 2px 16px;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+#pose-Image {
+  width: 60%;
+  height: auto;
+}
+
+.modal-footer {
+  padding: 2px 16px 30px;
+  color: white;
+}
+
+
+.Modal_Reconfirm_Relation {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(21, 7, 7, 0.4); /* Black w/ opacity */
+
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+.Modal_Reconfirm_Relation_Content {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+
+  background-color: white;
+  color: black;
+  width: 80%;
+  font-size: 280%;
+  font-weight: bold;
+  border-radius: 30px 30px 30px 30px;
+}
+.container {
+  display: grid;
+  grid-template-rows: 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px; /* 이미지 간 간격 */
+  padding: 20px;
+}
+#radio-option1 { grid-area: 1 / 1; } /* 좌상단 */
+#radio-option2 { grid-area: 1 / 2; } /* 우상단 */
+#radio-option3 { grid-area: 2 / 1; } /* 좌하단 */
+#radio-option4 { grid-area: 2 / 2; } /* 우하단 */
+#radio-option5 { grid-area: 3 / 1 / 4 / 3; } /* 중앙 하단 */
+.container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.radio-option {
+  display: inline-block;
+  text-align: center;
+}
+.radio-option input[type="radio"] {
+  display: none; /* 기본 라디오 버튼 숨기기 */
+}
+.radio-option label {
+  display: inline-block;
+  cursor: pointer;
+  border: 10px solid rgb(180, 180, 180);
+  border-radius: 8px;
+  padding: 5px;
+  width: 300px;
+}
+.radio-option input[type="radio"]:checked + label {
+  border-color: #007bff; /* 선택 시 파란색 테두리 */
+}
+.radio-option img {
+  width: 200px; /* 이미지 크기 조절 */
+  height: 200px;
+  object-fit: cover;
+}
+
+.Relation_Confirm {
+  margin: auto;
+  display: block;
+
+  background-color: transparent;
+  border: none;
+  height: 70px;
+  width: 600px;
+  font-size: 50px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #2a2a2a;
+}
+#modal_reconfirm_relation_text {
+  text-align: center;
+}
+
+.Modal_Recheck_Personcount {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(21, 7, 7, 0.4);
+
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+.Modal_Recheck_Personcount_Content {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+
+  background-color: #fefefe;
+  width: 80%;
+  font-size: 280%;
+  font-weight: bold;
+  border-radius: 30px 30px 30px 30px;
+}
+.Modal_Recheck_Personcount_Button_Section {
+  position: relative;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: auto;
+  margin-right: auto;
+  gap: 10px;
+}
+.Recheck_Personcount {
+  text-align: center;
+}
+.Recheck_Result_Yes {
+  width: 300px;
+  background-color: rgb(84, 100, 146);
+  border: none;
+  border-radius: 30px 30px 30px 30px;
+  color: white;
+  letter-spacing: 10px;
+}
+.Recheck_Result_No {
+  width: 300px;
+  background-color: rgb(84, 100, 146);
+  border: none;
+  border-radius: 30px 30px 30px 30px;
+  color: white;
+  letter-spacing: 10px;
+}
+.Input_Personcount_Section {
+  display: none;
+}
+#input_personcount_text {
+  text-align: center;
+}
+#input_personcount {
+  display: relative;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
+  text-align: center;
+}
+#submit_button {
+  display: relative;
+  margin-left: 50%;
+  margin-top: 10px;
+  transform: translate(-50%, 0%);
+
+  background-color: rgb(84, 100, 146);
+  border: none;
+  border-radius: 30px 30px 30px 30px;
+  width: 300px;
+
+  color: white;
+  letter-spacing: 10px;
+}
+
+
+
+
+.Modal_Help {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(7, 7, 7, 0.8);
+
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+.Modal_Help_Content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+
+  background-color: white;
+  width: 90%;
+  font-size: 280%;
+  font-weight: bold;
+  border-radius: 30px 30px 30px 30px;
+}
+#help_close {
+  position: absolute;
+  right: 50px;
+  font-size: 200%;
+}
+#help_image {
+  display: flex;
+  justify-self: center;
+  width: 70%;
+  height: auto;
+}
+#help_text {
+  font-size: 32px;
+  font-weight: bold;
+}
+.highlight {
+  font-weight: bold;
+  color: rgb(40, 110, 70);
+}
+
+.Modal-Loading {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+}
+.Modal-Loading-Content {
+  margin: auto;
+  width: fit-content;
+
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  color: white;
+  text-align: center;
+  font-size: 200%;
+  font-weight: bold;
+}
+.loader {
+  width: 144px;
+  height: 144px;
+  border: 10px solid #FFF;
+  border-bottom-color: #FF3D00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+} 
+
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
