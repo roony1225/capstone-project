@@ -1,5 +1,5 @@
-# landmark-camera
-Embedded Software Contest 2023
+# Capstone-project
+Deep Learning-Based Outdoor Tourist Photo Zone with People Analysis and Accuracy Calculation
 
 # Generate .pem files using openssl
 - openssl genrsa -out key.pem
